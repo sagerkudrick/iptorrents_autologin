@@ -2,17 +2,21 @@
 
 ## Overview
 
-This tool automates the login process to iptorrents.com using an undetected Chrome driver. It’s designed to be used locally because using a VPS or VPN will likely trigger Cloudflare’s bot protection, requiring you to verify that you are human. While manual verification can still occasionally happen locally, being on a “trusted” IP address greatly reduces these prompts and minimizes your involvement.
+This tool automates the login process to [iptorrents.com](https://iptorrents.com) using an undetected Chrome driver. It’s designed to be used **locally**, as using a VPS or VPN will likely trigger Cloudflare’s bot protection, requiring you to manually prove you're human. While this can still happen on a trusted residential IP, it's much less frequent—reducing the time and effort you need to spend.
 
 ---
 
 ## How It Works
 
 - The tool launches a Chromium browser instance controlled by the script.
-- If Cloudflare’s "Are you human?" challenge appears, the script will **pause indefinitely**, allowing you to manually solve the CAPTCHA.
-- Once the challenge is cleared and the login form appears, the tool automatically fills in your username and password and logs you in.
-- After logging in, the browser stays open for 20 seconds before closing automatically.
-- If you wish, you can close the browser manually at any time to end the session early.
+- If Cloudflare’s "Are you human?" challenge appears, the script will **wait indefinitely** so you can solve the CAPTCHA manually.
+- Once the login page is visible, it will:
+  - Fill in your IPTorrents username and password.
+  - Submit the login form.
+- Upon successful login, it will:
+  - Take a screenshot of the logged-in page (`loggedin.png`) so you can verify when it last ran successfully.
+  - Wait 20 seconds before automatically closing the browser.
+- You may also close the browser manually at any time.
 
 ---
 
@@ -20,8 +24,8 @@ This tool automates the login process to iptorrents.com using an undetected Chro
 
 ### Manual Use
 
-- Make sure `ipt_login.exe` and `config.json` are in the same folder.
-- Edit the `config.json` file to add your IPTorrents username and password:
+1. Place `ipt_login.exe` and `config.json` in the same folder.
+2. Edit the `config.json` file with your IPTorrents credentials:
 
     ```json
     {
@@ -30,55 +34,59 @@ This tool automates the login process to iptorrents.com using an undetected Chro
     }
     ```
 
-- Double-click `ipt_login.exe` to run the login process manually.
-- You can manually solve Cloudflare challenges if prompted during execution.
+3. Double-click `ipt_login.exe` to start the login process manually.
+4. If a Cloudflare check appears, complete it. The script will continue once it reaches the login form.
 
 ---
 
 ### Automatic Scheduled Run
 
-You can set this tool to run automatically on a schedule (e.g., every 14 days) to reduce manual involvement:
+You can set this up to run on a routine (e.g., every 14 days) so you don’t have to manually maintain activity:
 
-1. Ensure `ipt_login.exe`, `config.json`, and `run_login.bat` (batch script) are in the same folder.
+1. Ensure the following files are in the same folder:
+   - `ipt_login.exe`
+   - `config.json`
+   - `run_login.bat` (included batch script)
 
-2. Edit `config.json` with your credentials as shown above.
+2. Confirm your credentials are correct in `config.json`.
 
-3. Use your operating system’s task scheduler to run `run_login.bat` at your desired interval:
+3. Schedule the batch script to run periodically:
+   - **Windows:** Use Task Scheduler to run `run_login.bat` every 14 days or on a custom interval.
+   - **Linux/macOS:** Use a cron job to call a shell script that runs the `.exe` (via Wine if needed).
 
-   - **Windows:** Use Task Scheduler to create a basic task that runs `run_login.bat` every 14 days (or your preferred schedule).
-   - **Linux/macOS:** Use `cron` jobs to execute a shell script that calls the executable.
-
-4. The batch script will launch the executable, which opens the browser for login and lets you complete Cloudflare challenges manually if needed.
-
----
-
-## Important Notes
-
-- **Keep this tool and your `config.json` file local and secure.**
-- The script depends on your **local IP address**. Using it on an untrusted or changing IP may trigger Cloudflare more frequently, requiring manual intervention.
-- Running it from your usual location reduces Cloudflare challenges, but some manual interaction may still occasionally be necessary.
+4. The script will run quietly, handle login, and save a `loggedin.png` screenshot of the result.
 
 ---
 
 ## Dependencies
 
-- The `.exe` is built using [PyInstaller](https://www.pyinstaller.org/) and bundles Python 3.9+.
-- Uses the `undetected-chromedriver` Python library to avoid bot detection.
-- Requires Chrome browser installed on the machine.
-- No need to have Python installed separately if you run the `.exe` file.
+- The `.exe` is bundled using [PyInstaller](https://www.pyinstaller.org/) with Python 3.9+.
+- Uses the `undetected-chromedriver` Python package to bypass bot detection.
+- Requires a local installation of the **Chrome** browser (any recent version).
+- No need to have Python installed if you're using the `.exe`.
+
+---
+
+## Important Notes
+
+- **Keep this tool and your `config.json` private and local.**
+- The login automation relies on your **trusted local IP address**. Using this from a VPS or unknown IP will almost certainly result in Cloudflare prompts.
+- Even locally, Cloudflare may still prompt you occasionally—this is expected and handled by the indefinite wait built into the tool.
+- The `loggedin.png` file is overwritten each time and can be used as a quick log of successful logins.
 
 ---
 
 ## Security Disclaimer
 
-- Your IPTorrents credentials are stored in plaintext in `config.json`. Keep this file private.
-- Use this tool responsibly and only on accounts you own.
+- Your IPTorrents credentials are stored in plaintext in `config.json`. Do not share this file or sync it to cloud storage without encryption.
+- This tool is for **personal use only** on accounts you own.
+- No information is sent anywhere other than directly to the IPTorrents site through your browser.
 
 ---
 
 ## Support & Contributions
 
-Feel free to open issues or contribute improvements to this project.
+This project is simple by design. Feel free to suggest improvements or report bugs.
 
 ---
 
