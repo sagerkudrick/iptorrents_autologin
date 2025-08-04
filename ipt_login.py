@@ -9,13 +9,11 @@ import shutil
 import os
 import time
 
-# Optional: clear undetected_chromedriver cache (comment if you want to keep)
 cache_dir = os.path.expandvars(r'%APPDATA%\undetected_chromedriver\undetected')
 if os.path.exists(cache_dir):
     print(f"Clearing cache at {cache_dir}...")
     shutil.rmtree(cache_dir)
 
-# Get directory of the executable or script
 if getattr(sys, 'frozen', False):
     basedir = os.path.dirname(sys.executable)
 else:
@@ -54,7 +52,6 @@ def wait_for_login_or_cloudflare(driver):
 
 def main():
     options = uc.ChromeOptions()
-    # Add any options you want here, e.g., disable devtools auto-open:
     # options.add_argument("--disable-blink-features=AutomationControlled")
 
     print("Launching Chrome browser...")
@@ -63,10 +60,8 @@ def main():
     print("Loading iptorrents.com ...")
     driver.get('https://iptorrents.com/')
 
-    # Wait until login form available or Cloudflare challenge solved
     wait_for_login_or_cloudflare(driver)
 
-    # Now proceed with login
     print("Entering credentials...")
     driver.find_element(By.NAME, "username").send_keys(username)
     driver.find_element(By.NAME, "password").send_keys(password)
@@ -94,3 +89,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
