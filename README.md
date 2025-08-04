@@ -2,7 +2,7 @@
 
 ## Overview
 
-This tool automates the login process to [iptorrents.com](https://iptorrents.com) using an undetected Chrome driver. Paired with a cron job or Windows service, logins can be automated weekly or biweekly to prevent account pruning with minimal user interaction and effort. It’s designed to be used **locally**, as using a VPS or VPN will likely trigger Cloudflare’s bot protection, requiring you to manually prove you're human. While this can still happen on a trusted residential IP, it's much less frequent, reducing the time and effort you need to spend.
+This tool automates the login process to [iptorrents.com](https://iptorrents.com) using an undetected Chrome driver. Paired with a **cron job** or **Windows service**, **logins can be automated** weekly or biweekly **to prevent account pruning** with minimal user interaction and effort. It’s designed to be used **locally**, as using a VPS or VPN will likely trigger Cloudflare’s bot protection, requiring you to manually prove you're human. While this can still happen on a trusted residential IP, it's much less frequent, reducing the time and effort you need to spend.
 
 <p align="center">
   <img src="https://github.com/sagerkudrick/iptorrents_autologin/blob/main/imgs/example.gif?raw=true" alt="Preview" width="50%" height="50%"/>
